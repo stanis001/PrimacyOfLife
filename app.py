@@ -131,8 +131,8 @@ def is_prime(n):
 
 # Chinese zodiac data
 zodiac_animals = [
-    "Rat", "Ox", "Tiger", "Rabbit", "Dragon", "Snake",
-    "Horse", "Goat", "Monkey", "Rooster", "Dog", "Pig"
+    "Monkey", "Rooster", "Dog", "Pig", "Rat", "Ox", "Tiger", "Rabbit", "Dragon", "Snake",
+    "Horse", "Goat"
 ]
 
 # Partial range for demo
@@ -212,5 +212,7 @@ def download():
     output.seek(0)
     return Response(output, mimetype='text/csv', headers={'Content-Disposition': 'attachment; filename=prime_birthdays.csv'})
 
+import os
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
