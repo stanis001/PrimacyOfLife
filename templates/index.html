@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prime Birthday Calculator</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2rem; }
+        table { border-collapse: collapse; width: 100%; margin-top: 1rem; }
+        th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: center; }
+        th { background-color: #f0f0f0; }
+        form { margin-bottom: 1rem; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Prime Birthday & Chinese Zodiac Calculator</h1>
+    <form method="POST" action="/">
+        <label for="birthday">Enter your birthday:</label>
+        <input type="date" id="birthday" name="birthday" required>
+        <button type="submit">Generate</button>
+    </form>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    {% if results %}
+        <form method="POST" action="/download">
+            <input type="hidden" name="birthday" value="{{ request.form['birthday'] }}">
+            <button type="submit">Download as CSV</button>
+        </form>
+
+        <table>
+            <tr>
+                <th>Age</th>
+                <th>Birthday</th>
+                <th>Days Since Birth</th>
+                <th>Chinese Zodiac</th>
+                <th>Year is Prime?</th>
+                <th>Days is Prime?</th>
+            </tr>
+            {% for row in results %}
+            <tr>
+                <td>{{ row.age }}</td>
+                <td>{{ row.birthday }}</td>
+                <td>{{ row.days }}</td>
+                <td>{{ row.zodiac }}</td>
+                <td>{{ "✔" if row.prime_year else "" }}</td>
+                <td>{{ "✔" if row.prime_days else "" }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</body>
+</html>
